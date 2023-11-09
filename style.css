@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
+
+.header {
+    background-color: #89CFF0; /* A pastel blue color */
+    color: white;
+    text-align: center;
+    padding: 1rem 0; /* Adjusted padding */
+    font-family: 'Vollkorn', sans-serif; /* Applying 'Vollkorn' font */
+    font-size: 2.5rem; /* Larger font size for the header */
+}
+
+.fen-input-group {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Vollkorn', sans-serif; /* Applying 'Vollkorn' font */
+}
+
+.fen-input {
+    display: block;
+    width: calc(100% - 1.5rem); /* Adjust width to prevent hanging over the page */
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    font-family: 'Vollkorn', sans-serif; /* Corrected the font family name */
+    margin-bottom: .5rem; /* Space between input and button */
+}
+
+.set-fen-btn {
+    color: #495057; /* Color similar to the input text for a flat look */
+    background-color: #89CFF0; /* Transparent background for a flat look */
+    width: fit-content; /* Fit the content rather than full width */
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    border: 1px solid #89CFF0; /* Similar to input box border */
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
+    box-shadow: none;
+    font-family: 'Vollkorn', sans-serif;
+}
+
+.set-fen-btn:hover {
+    background-color: #5b9bd5; /* Darker shade for hover */
+    border-color: #5b9bd5;
+    cursor: pointer; /* Change cursor on hover */
+    font-family: 'Vollkorn', sans-serif;
+}
+
+.set-fen-btn:active {
+    transform: scale(0.97); /* Button press effect */
+    box-shadow: 0 1px 3px rgba(0,0,0,.2); /* Adjusted shadow for pressed effect */
+    font-family: 'Vollkorn', sans-serif;
+}
+
+.error-message {
+    color: #d9534f; /* Error color */
+    margin-top: 10px; /* Spacing above the error message */
+    display: block; /* Make sure it takes its own line */
+    font-family: 'Vollkorn', sans-serif; /* Applying 'Vollkorn' font */
+}
+
+.form-label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+    color: #212529;
+    font-family: 'Volkorn', sans-serif;
+}

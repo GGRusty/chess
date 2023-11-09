@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chess</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h3> Chess </h3>
+    </header>
+    <div id="FenInDiv" class="fen-input-group">
+        <label for="fenIn" class="form-label">FEN:</label>
+        <input type="text" id="fenIn" class="fen-input"/>
+        <button type="button" id="SetFen" class="set-fen-btn">Set Position</button>
+        <div id="error-message" class="error-message"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/defs.js"></script>
+    <script src="js/io.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/gui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
