@@ -40,7 +40,7 @@ const RANKS = {
   RANK_NONE: 8,
 };
 
-const COLOURS = {
+const COLORS = {
   WHITE: 0,
   BLACK: 1,
   BOTH: 2,
@@ -138,19 +138,19 @@ var PieceVal = [
   0, 100, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000,
 ];
 var PieceCol = [
-  COLOURS.BOTH,
-  COLOURS.WHITE,
-  COLOURS.WHITE,
-  COLOURS.WHITE,
-  COLOURS.WHITE,
-  COLOURS.WHITE,
-  COLOURS.WHITE,
-  COLOURS.BLACK,
-  COLOURS.BLACK,
-  COLOURS.BLACK,
-  COLOURS.BLACK,
-  COLOURS.BLACK,
-  COLOURS.BLACK,
+  COLORS.BOTH,
+  COLORS.WHITE,
+  COLORS.WHITE,
+  COLORS.WHITE,
+  COLORS.WHITE,
+  COLORS.WHITE,
+  COLORS.WHITE,
+  COLORS.BLACK,
+  COLORS.BLACK,
+  COLORS.BLACK,
+  COLORS.BLACK,
+  COLORS.BLACK,
+  COLORS.BLACK,
 ];
 
 var PiecePawn = [
@@ -244,6 +244,11 @@ var PieceSlides = [
   BOOL.FALSE,
 ];
 // en pesant pce == Empty * 120 + sq
+var KnDir = [-8, -19, -21, -12, 8, 19, 21, 12];
+var RkDir = [-1, -10, 1, 10];
+var BiDir = [-9, -11, 11, 9];
+var KiDir = [-1, -10, 1, 10, -9, -11, 11, 9];
+
 var PieceKeys = new Array(14 * 120);
 var SideKey;
 var CastleKeys = new Array(16);
