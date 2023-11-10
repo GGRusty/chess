@@ -1,4 +1,4 @@
-var PIECES = {
+const PIECES = {
   EMPTY: 0,
   wP: 1,
   wN: 2,
@@ -14,9 +14,9 @@ var PIECES = {
   bK: 12,
 };
 
-var BRD_SQ_NUM = 120;
+const BRD_SQ_NUM = 120;
 
-var FILES = {
+const FILES = {
   FILE_A: 0,
   FILE_B: 1,
   FILE_C: 2,
@@ -28,7 +28,7 @@ var FILES = {
   FILE_NONE: 8,
 };
 
-var RANKS = {
+const RANKS = {
   RANK_1: 0,
   RANK_2: 1,
   RANK_3: 2,
@@ -40,11 +40,11 @@ var RANKS = {
   RANK_NONE: 8,
 };
 
-var COLORS = {WHITE: 0, BLACK: 1, BOTH: 2};
+const COLORS = {WHITE: 0, BLACK: 1, BOTH: 2};
 
-var CASTLEBIT = {WKCA: 1, WQCA: 2, BKCA: 4, BQCA: 8};
+const CASTLEBIT = {WKCA: 1, WQCA: 2, BKCA: 4, BQCA: 8};
 
-var SQUARES = {
+const SQUARES = {
   A1: 21,
   B1: 22,
   C1: 23,
@@ -65,18 +65,18 @@ var SQUARES = {
   OFFBOARD: 100,
 };
 
-var BOOL = {FALSE: 0, TRUE: 1};
+const BOOL = {FALSE: 0, TRUE: 1};
 
-var MAXGAMEMOVES = 2048;
-var MAXPOSITIONMOVES = 256;
-var MAXDEPTH = 64;
-var INFINITE = 30000;
-var MATE = 29000;
+const MAXGAMEMOVES = 2048;
+const MAXPOSITIONMOVES = 256;
+const MAXDEPTH = 64;
+const INFINITE = 30000;
+const MATE = 29000;
 
 var FilesBrd = new Array(BRD_SQ_NUM);
 var RanksBrd = new Array(BRD_SQ_NUM);
 
-var START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
 var PceChar = '.PNBRQKpnbrqk';
 var SideChar = 'wb-';
@@ -307,14 +307,14 @@ function PROMOTED(m) {
   return (m >> 20) & 0xf;
 }
 
-var MFLAGEP = 0x40000;
-var MFLAGPS = 0x80000;
-var MFLAGCA = 0x1000000;
+const MFLAGEP = 0x40000;
+const MFLAGPS = 0x80000;
+const MFLAGCA = 0x1000000;
 
-var MFLAGCAP = 0x7c000;
-var MFLAGPROM = 0xf00000;
+const MFLAGCAP = 0x7c000;
+const MFLAGPROM = 0xf00000;
 
-var NOMOVE = 0;
+const NOMOVE = 0;
 
 function SQOFFBOARD(sq) {
   if (FilesBrd[sq] == SQUARES.OFFBOARD) return BOOL.TRUE;
