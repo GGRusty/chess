@@ -1,4 +1,4 @@
-const PIECES = {
+var PIECES = {
   EMPTY: 0,
   wP: 1,
   wN: 2,
@@ -14,9 +14,9 @@ const PIECES = {
   bK: 12,
 };
 
-const BRD_SQ_NUM = 120;
+var BRD_SQ_NUM = 120;
 
-const FILES = {
+var FILES = {
   FILE_A: 0,
   FILE_B: 1,
   FILE_C: 2,
@@ -28,7 +28,7 @@ const FILES = {
   FILE_NONE: 8,
 };
 
-const RANKS = {
+var RANKS = {
   RANK_1: 0,
   RANK_2: 1,
   RANK_3: 2,
@@ -40,15 +40,11 @@ const RANKS = {
   RANK_NONE: 8,
 };
 
-const COLORS = {
-  WHITE: 0,
-  BLACK: 1,
-  BOTH: 2,
-};
+var COLORS = {WHITE: 0, BLACK: 1, BOTH: 2};
 
-const CASTLEBIT = {WKCA: 1, WQCA: 2, BKCA: 4, BQCA: 8};
+var CASTLEBIT = {WKCA: 1, WQCA: 2, BKCA: 4, BQCA: 8};
 
-const SQUARES = {
+var SQUARES = {
   A1: 21,
   B1: 22,
   C1: 23,
@@ -69,16 +65,18 @@ const SQUARES = {
   OFFBOARD: 100,
 };
 
-const BOOL = {FALSE: 0, TRUE: 1};
+var BOOL = {FALSE: 0, TRUE: 1};
 
-const MAXGAMEMOVES = 2048;
-const MAXPOSITIONMOVES = 256;
-const MAXDEPTH = 64;
+var MAXGAMEMOVES = 2048;
+var MAXPOSITIONMOVES = 256;
+var MAXDEPTH = 64;
+var INFINITE = 30000;
+var MATE = 29000;
 
 var FilesBrd = new Array(BRD_SQ_NUM);
 var RanksBrd = new Array(BRD_SQ_NUM);
 
-const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+var START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
 var PceChar = '.PNBRQKpnbrqk';
 var SideChar = 'wb-';
@@ -134,9 +132,7 @@ var PieceMin = [
   BOOL.FALSE,
   BOOL.FALSE,
 ];
-var PieceVal = [
-  0, 100, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000,
-];
+var PieceVal = [0, 100, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000];
 var PieceCol = [
   COLORS.BOTH,
   COLORS.WHITE,
@@ -243,15 +239,23 @@ var PieceSlides = [
   BOOL.TRUE,
   BOOL.FALSE,
 ];
-// en pesant pce == Empty * 120 + sq
+
 var KnDir = [-8, -19, -21, -12, 8, 19, 21, 12];
 var RkDir = [-1, -10, 1, 10];
 var BiDir = [-9, -11, 11, 9];
 var KiDir = [-1, -10, 1, 10, -9, -11, 11, 9];
 
+var DirNum = [0, 0, 8, 4, 4, 8, 8, 0, 8, 4, 4, 8, 8];
+var PceDir = [0, 0, KnDir, BiDir, RkDir, KiDir, KiDir, 0, KnDir, BiDir, RkDir, KiDir, KiDir];
+var LoopNonSlidePce = [PIECES.wN, PIECES.wK, 0, PIECES.bN, PIECES.bK, 0];
+var LoopNonSlideIndex = [0, 3];
+var LoopSlidePce = [PIECES.wB, PIECES.wR, PIECES.wQ, 0, PIECES.bB, PIECES.bR, PIECES.bQ, 0];
+var LoopSlideIndex = [0, 4];
+
 var PieceKeys = new Array(14 * 120);
 var SideKey;
 var CastleKeys = new Array(16);
+
 var Sq120ToSq64 = new Array(BRD_SQ_NUM);
 var Sq64ToSq120 = new Array(64);
 
@@ -269,4 +273,64 @@ function SQ120(sq64) {
 
 function PCEINDEX(pce, pceNum) {
   return pce * 10 + pceNum;
+}
+
+var Kings = [PIECES.wK, PIECES.bK];
+var CastlePerm = [
+  15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 13, 15, 15,
+  15, 12, 15, 15, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+  15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+  15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 7, 15, 15, 15, 3, 15,
+  15, 11, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+];
+
+/*	
+0000 0000 0000 0000 0000 0111 1111 -> From 0x7F
+0000 0000 0000 0011 1111 1000 0000 -> To >> 7, 0x7F
+0000 0000 0011 1100 0000 0000 0000 -> Captured >> 14, 0xF
+0000 0000 0100 0000 0000 0000 0000 -> EP 0x40000
+0000 0000 1000 0000 0000 0000 0000 -> Pawn Start 0x80000
+0000 1111 0000 0000 0000 0000 0000 -> Promoted Piece >> 20, 0xF
+0001 0000 0000 0000 0000 0000 0000 -> Castle 0x1000000
+*/
+
+function FROMSQ(m) {
+  return m & 0x7f;
+}
+function TOSQ(m) {
+  return (m >> 7) & 0x7f;
+}
+function CAPTURED(m) {
+  return (m >> 14) & 0xf;
+}
+function PROMOTED(m) {
+  return (m >> 20) & 0xf;
+}
+
+var MFLAGEP = 0x40000;
+var MFLAGPS = 0x80000;
+var MFLAGCA = 0x1000000;
+
+var MFLAGCAP = 0x7c000;
+var MFLAGPROM = 0xf00000;
+
+var NOMOVE = 0;
+
+function SQOFFBOARD(sq) {
+  if (FilesBrd[sq] == SQUARES.OFFBOARD) return BOOL.TRUE;
+  return BOOL.FALSE;
+}
+
+function HASH_PCE(pce, sq) {
+  GameBoard.posKey ^= PieceKeys[pce * 120 + sq];
+}
+
+function HASH_CA() {
+  GameBoard.posKey ^= CastleKeys[GameBoard.castlePerm];
+}
+function HASH_SIDE() {
+  GameBoard.posKey ^= SideKey;
+}
+function HASH_EP() {
+  GameBoard.posKey ^= PieceKeys[GameBoard.enPas];
 }
