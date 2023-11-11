@@ -72,6 +72,7 @@ const MAXPOSITIONMOVES = 256;
 const MAXDEPTH = 64;
 const INFINITE = 30000;
 const MATE = 29000;
+const PVENTRIES = 10000;
 
 var FilesBrd = new Array(BRD_SQ_NUM);
 var RanksBrd = new Array(BRD_SQ_NUM);
@@ -260,18 +261,19 @@ var Sq120ToSq64 = new Array(BRD_SQ_NUM);
 var Sq64ToSq120 = new Array(64);
 
 function RAND_32() {
-  return Math.floor(Math.random() * Math.pow(2, 32));
+  return (
+    (Math.floor(Math.random() * 255 + 1) << 23) |
+    (Math.floor(Math.random() * 255 + 1) << 16) |
+    (Math.floor(Math.random() * 255 + 1) << 8) |
+    Math.floor(Math.random() * 255 + 1)
+  );
 }
+
 var Mirror64 = [
   56, 57, 58, 59, 60, 61, 62, 63, 48, 49, 50, 51, 52, 53, 54, 55, 40, 41, 42, 43, 44, 45, 46, 47,
   32, 33, 34, 35, 36, 37, 38, 39, 24, 25, 26, 27, 28, 29, 30, 31, 16, 17, 18, 19, 20, 21, 22, 23, 8,
   9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7,
 ];
-
-// Potentially useful function for reversing an array
-//var reverseArray = function (array) {
-//  return array.slice().reverse();
-//};
 
 function SQ64(sq120) {
   return Sq120ToSq64[sq120];
@@ -348,3 +350,12 @@ function HASH_SIDE() {
 function HASH_EP() {
   GameBoard.posKey ^= PieceKeys[GameBoard.enPas];
 }
+
+var GameController = {};
+GameController.EngineSide = COLORS.BOTH;
+GameController.PlayerSide = COLORS.BOTH;
+GameController.GameOver = BOOL.FALSE;
+
+var UserMove = {};
+UserMove.from = SQUARES.NO_SQ;
+UserMove.to = SQUARES.NO_SQ;

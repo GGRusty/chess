@@ -1,24 +1,180 @@
-@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: hsl(0, 0%, 95%);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+}
 
 .header {
-    background-color: #89CFF0; /* A pastel blue color */
+    background-color: #4a4e69;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 2rem;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin: 20px;
+}
+
+.board-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 480px;
+}
+
+.fen-input-group {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.fen-input, .search-time {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    margin-right: 10px;
+    margin-left: 5px;
+    flex-grow: 1;
+}
+
+.set-fen-btn, .search-btn, .new-game-btn, .flip-btn, .take-btn {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.set-fen-btn:hover, .search-btn:hover, .new-game-btn:hover, .flip-btn:hover, .take-btn:hover {
+    background-color: #5a6268;
+}
+
+.engine-output {
+    margin-left: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+
+}
+
+.board {
+    width: 480px;
+    height: 480px;
+    border-style: solid;
+    border-width: 2px;
+    position: relative;
+}
+
+.Square {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+}
+
+.Dark {
+    background-color: #5b9bd5;
+}
+
+.Light {
+    background-color: #eeeed2;
+}
+
+.Piece {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+}
+.rank1 {
+    top: 420px;
+}
+.rank2 {
+    top: 360px;
+}
+.rank3 {
+    top: 300px;
+}
+.rank4 {
+    top: 240px;
+}
+.rank5 {
+    top: 180px;
+}
+.rank6 {
+    top: 120px;
+}
+.rank7 {
+    top: 60px;
+}
+.rank8 {
+    top: 0px;
+}
+
+
+.file1 {
+    left: 0px;
+}
+.file2 {
+    left: 60px;
+}
+.file3 {
+    left: 120px;
+}
+.file4 {
+    left: 180px;
+}
+.file5 {
+    left: 240px;
+}
+.file6 {
+    left: 300px;
+}
+.file7 {
+    left: 360px;
+}
+.file8 {
+    left: 420px;
+}
+
+.SqSelected {
+    background-color: rgba(176, 222, 181, 0.739)
+}
+/* 
+.header {
+    background-color: #89CFF0;
     color: white;
     text-align: center;
-    padding: 1rem 0; /* Adjusted padding */
-    font-family: 'Vollkorn', sans-serif; /* Applying 'Vollkorn' font */
-    font-size: 2.5rem; /* Larger font size for the header */
+    height: 60px;
+    font-family: 'Vollkorn', sans-serif; 
+    font-size: 2.5rem;
 }
 
 .fen-input-group {
     margin: 1rem;
     display: flex;
     flex-direction: column;
-    font-family: 'Vollkorn', sans-serif; /* Applying 'Vollkorn' font */
+    
+    font-family: 'Roboto', sans-serif;
 }
 
 .fen-input {
     display: block;
-    width: calc(100% - 1.5rem); /* Adjust width to prevent hanging over the page */
+    width: calc(100% - 1.5rem);
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;
@@ -27,42 +183,42 @@
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    font-family: 'Vollkorn', sans-serif; /* Corrected the font family name */
-    margin-bottom: .5rem; /* Space between input and button */
+    font-family: 'Vollkorn', sans-serif; 
+    margin-bottom: .5rem; 
 }
 
 .set-fen-btn {
-    color: #495057; /* Color similar to the input text for a flat look */
-    background-color: #89CFF0; /* Transparent background for a flat look */
-    width: fit-content; /* Fit the content rather than full width */
+    color: #495057; 
+    background-color: #89CFF0; 
+    width: fit-content; 
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;
     border-radius: .25rem;
-    border: 1px solid #89CFF0; /* Similar to input box border */
+    border: 1px solid #89CFF0; 
     transition: background-color .15s ease-in-out, border-color .15s ease-in-out;
     box-shadow: none;
     font-family: 'Vollkorn', sans-serif;
 }
 
 .set-fen-btn:hover {
-    background-color: #5b9bd5; /* Darker shade for hover */
+    background-color: #5b9bd5; 
     border-color: #5b9bd5;
-    cursor: pointer; /* Change cursor on hover */
+    cursor: pointer;
     font-family: 'Vollkorn', sans-serif;
 }
 
 .set-fen-btn:active {
-    transform: scale(0.97); /* Button press effect */
-    box-shadow: 0 1px 3px rgba(0,0,0,.2); /* Adjusted shadow for pressed effect */
+    transform: scale(0.97); 
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
     font-family: 'Vollkorn', sans-serif;
 }
 
 .error-message {
-    color: #d9534f; /* Error color */
-    margin-top: 10px; /* Spacing above the error message */
-    display: block; /* Make sure it takes its own line */
-    font-family: 'Vollkorn', sans-serif; /* Applying 'Vollkorn' font */
+    color: #d9534f; 
+    margin-top: 10px; 
+    display: block; 
+    font-family: 'Vollkorn', sans-serif; 
 }
 
 .form-label {
@@ -72,3 +228,94 @@
     color: #495057;
     font-family: 'Volkorn', sans-serif;
 }
+
+.board {
+    position: relative;
+    top: 20px;
+    left: 60px;
+    width: 480px;
+    height: 480px;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.engine-output {
+    position: absolute;
+    left: 600px;
+    top: 300px;
+}
+
+.Square {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+}
+
+.Dark {
+    background-color: #5b9bd5;
+}
+
+.Light {
+    background-color: #eeeed2;
+}
+
+.SqSelected {
+    background-color: rgba(176, 222, 181, 0.739)
+}
+
+.rank1 {
+    top: 420px;
+}
+.rank2 {
+    top: 360px;
+}
+.rank3 {
+    top: 300px;
+}
+.rank4 {
+    top: 240px;
+}
+.rank5 {
+    top: 180px;
+}
+.rank6 {
+    top: 120px;
+}
+.rank7 {
+    top: 60px;
+}
+.rank8 {
+    top: 0px;
+}
+
+
+.file1 {
+    left: 0px;
+}
+.file2 {
+    left: 60px;
+}
+.file3 {
+    left: 120px;
+}
+.file4 {
+    left: 180px;
+}
+.file5 {
+    left: 240px;
+}
+.file6 {
+    left: 300px;
+}
+.file7 {
+    left: 360px;
+}
+.file8 {
+    left: 420px;
+}
+
+.Piece {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+} */

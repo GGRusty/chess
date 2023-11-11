@@ -35,7 +35,6 @@ function PerftTest(depth) {
   var index;
   var move;
   var moveNum = 0;
-  GenerateMoves();
   for (
     index = GameBoard.moveListStart[GameBoard.ply];
     index < GameBoard.moveListStart[GameBoard.ply + 1];
